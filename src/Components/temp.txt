@@ -1,0 +1,140 @@
+import React, { useState } from "react";
+import Items from "../Items";
+
+async function getFoodItems (){
+    try {
+        const response =await axios. get('https://carretailerbackend.vercel.app/api/getFoodItems');
+        return response.data;
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}
+
+const CarPartModal = ({ isOpen, closeModal}) => {
+    const [foodItems,setFoodItems]=useState([]);
+    
+    
+    if (!isOpen) return null;    
+    useEffect(() => {
+        const fetchParts = async () => {
+            try {
+                const Parts=await getFoodItems();
+                setCarParts (Parts)
+            }
+            catch (err) {
+                console.log(err);
+            }
+        };
+        fetchParts ()
+    }, []);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+async function 
+
+const  FoodItems = async () => {
+  
+    const [foodItems,setFoodItems]=useState([])
+    
+    
+
+  return (
+    <div>
+      <div>
+        <Items />
+      </div>
+    </div>
+  );
+};
+
+export default FoodItems;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import React, { useState, useEffect } from "react";
+import Items from "../Items";
+import axios from "axios"; // Make sure axios is imported
+
+// Async function to fetch the food items
+async function getFoodItems() {
+  try {
+    const response = await axios.get(
+      "https://carretailerbackend.vercel.app/api/getparttypes"
+    );
+    console.log("hello", response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return []; // Return an empty array in case of error to prevent crash
+  }
+}
+
+const FoodItems = () => {
+  const [foodItems, setFoodItems] = useState([]); // State for storing food items
+
+  // useEffect for fetching data on component mount
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        const food = await getFoodItems();
+        setFoodItems(food);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchFood();
+  }, []);
+
+  console.log(foodItems); // Debugging: Log the fetched data
+
+  return (
+    <div>
+      <div>
+        {foodItems.map((item, index) => (
+          <Items key={index} link={item.image} title={item.type} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FoodItems;
